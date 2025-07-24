@@ -3,9 +3,9 @@ export interface Skill {
   name: string;
   type: string;
   category: string;
-  dpt: string;
-  ept: string;
-  rigidity: string;
+  damagePerTurn: string;
+  energyPerTurn: string;
+  cooldownTime: string;
 }
 
 // クイズ用技データ

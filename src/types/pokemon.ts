@@ -40,7 +40,7 @@ export type PokemonDisplayMode = "grid" | "list";
 
 // ポケモン世代定義
 export interface PokemonGeneration {
-  number: number;
+  generation: number;
   name: string;
   range: [number, number]; // [開始番号, 終了番号]
 }
