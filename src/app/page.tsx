@@ -15,14 +15,14 @@ export default function Home() {
           <Image
             width={50}
             height={50}
-            src="icons/pokeball-pokemon-svgrepo-com.svg"
-            alt="pokemon ball"
-          ></Image>
-          <p className="font-bold text-5xl">ポケモンクイズ</p>
+            src="/icons/pokeball-pokemon-svgrepo-com.svg"
+            alt="ポケモンボール"
+          />
+          <h1 className="font-bold text-5xl">ポケモンクイズ</h1>
         </div>
         <p className="text-2xl text-yellow-200 pb-10">
           あなたのポケモン知識を試そう！
-          <br></br>
+          <br />
           初代から最新作まで、幅広い問題でトレーナーレベルをチェック
         </p>
         <div className="flex justify-center gap-4">
