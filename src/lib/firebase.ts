@@ -5,7 +5,7 @@ export default class Firebase {
   _instance: FirebaseApp;
   _auth?: Auth;
 
-  constructor() {
+  private constructor() {
     const firebaseConfig = {
       apiKey: process.env.NEXT_PUBLIC_API_KEY,
       authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,

@@ -8,27 +8,36 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import Firebase from "@/lib/firebase";
+import { useAuthStore } from "@/store/auth";
 import { Label } from "@radix-ui/react-label";
 import { signInWithEmailAndPassword } from "firebase/auth";
-
-const login = (form: any) => {
-  // TODO: react-form-hooks を使った方がモダン？
-  // TODO: 値検証、エラーメッセージの掲出
-
-  signInWithEmailAndPassword(
-    Firebase.instance.auth,
-    form.get("email"),
-    form.get("password")
-  ).then((userCredential) => {
-    const user = userCredential.user;
-
-    console.log(user);
-
-    // TODO: ログイン後の処理、画面遷移、状態保持
-  });
-};
+import { LogIn } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const logIn = useAuthStore((store) => store.logIn);
+  const router = useRouter();
+
+  const login = (form: FormData) => {
+    // TODO: react-form-hooks を利用したものに変更
+    // TODO: 値検証、エラーメッセージの掲出
+
+    signInWithEmailAndPassword(
+      Firebase.instance.auth,
+      form.get("email") as string,
+      form.get("password") as string
+    ).then((userCredential) => {
+      const user = userCredential.user;
+
+      console.log(user);
+
+      // state設定
+      logIn();
+
+      router.push("/");
+    });
+  };
+
   return (
     <div className="flex justify-center p-20">
       <Card className="min-w-sm">
@@ -51,7 +60,7 @@ export default function Login() {
         </CardContent>
         <CardFooter>
           <Button form="loginForm" type="submit">
-            ログイン
+            <LogIn /> ログイン
           </Button>
         </CardFooter>
       </Card>
