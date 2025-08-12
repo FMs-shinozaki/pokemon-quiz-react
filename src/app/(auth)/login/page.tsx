@@ -21,9 +21,6 @@ export default function Login() {
   const [hasError, setError] = useState(false);
 
   const login = (form: FormData) => {
-    // TODO: react-form-hooks を利用したものに変更
-    // TODO: 値検証、エラーメッセージの掲出
-
     const emailAddress = form.get("email") as string;
     const password = form.get("password") as string;
 
