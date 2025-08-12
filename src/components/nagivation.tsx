@@ -50,7 +50,7 @@ export default function Navigation() {
         {/** ログイン/ログアウト */}
 
         {isLoggedIn ? (
-          <Link href="/login">
+          <Link href="/logout">
             <div className="flex gap-2">
               <LogOut /> ログアウト
             </div>

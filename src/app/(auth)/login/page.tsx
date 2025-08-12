@@ -1,4 +1,6 @@
 "use client";
+
+import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,40 +9,36 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import Firebase from "@/lib/firebase";
-import { useAuthStore } from "@/store/auth";
+import { useAuth } from "@/hooks/useAuth";
 import { Label } from "@radix-ui/react-label";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { LogIn } from "lucide-react";
+import { AlertCircleIcon, LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Login() {
-  const logIn = useAuthStore((store) => store.logIn);
+  const { logIn } = useAuth();
   const router = useRouter();
+  const [hasError, setError] = useState(false);
 
   const login = (form: FormData) => {
     // TODO: react-form-hooks を利用したものに変更
     // TODO: 値検証、エラーメッセージの掲出
 
-    signInWithEmailAndPassword(
-      Firebase.instance.auth,
-      form.get("email") as string,
-      form.get("password") as string
-    ).then((userCredential) => {
-      const user = userCredential.user;
+    const emailAddress = form.get("email") as string;
+    const password = form.get("password") as string;
 
-      console.log(user);
-
-      // state設定
-      logIn();
-
-      router.push("/");
-    });
+    logIn(emailAddress, password)
+      .then(() => {
+        router.push("/");
+      })
+      .catch(() => {
+        setError(true);
+      });
   };
 
   return (
     <div className="flex justify-center p-20">
-      <Card className="min-w-sm">
+      <Card className="w-[400px]">
         <CardHeader>ログイン</CardHeader>
         <CardContent>
           <form
@@ -59,9 +57,19 @@ export default function Login() {
           </form>
         </CardContent>
         <CardFooter>
-          <Button form="loginForm" type="submit">
-            <LogIn /> ログイン
-          </Button>
+          <div className="w-full space-y-4">
+            {hasError && (
+              <Alert variant="destructive">
+                <AlertCircleIcon />
+                <AlertTitle>
+                  メールアドレスかパスワードが間違っています
+                </AlertTitle>
+              </Alert>
+            )}
+            <Button form="loginForm" type="submit" className="w-full">
+              <LogIn /> ログイン
+            </Button>
+          </div>
         </CardFooter>
       </Card>
     </div>
