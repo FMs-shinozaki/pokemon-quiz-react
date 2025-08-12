@@ -2,8 +2,9 @@ import { FirebaseApp, initializeApp } from "firebase/app";
 import { Auth, getAuth } from "firebase/auth";
 
 export default class Firebase {
-  _instance: FirebaseApp;
-  _auth?: Auth;
+  private static _instance: Firebase;
+  private _app: FirebaseApp;
+  private _auth?: Auth;
 
   private constructor() {
     const firebaseConfig = {
@@ -16,16 +17,20 @@ export default class Firebase {
       measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
     };
 
-    this._instance = initializeApp(firebaseConfig);
+    this._app = initializeApp(firebaseConfig);
   }
 
   static get instance() {
-    return new Firebase();
+    if (!Firebase._instance) {
+      Firebase._instance = new Firebase();
+    }
+
+    return Firebase._instance;
   }
 
   get auth(): Auth {
     if (!this._auth) {
-      this._auth = getAuth(this._instance);
+      this._auth = getAuth(this._app);
     }
 
     return this._auth;
