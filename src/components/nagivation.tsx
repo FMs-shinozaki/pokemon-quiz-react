@@ -12,7 +12,7 @@ const navigationItems: { link: string; title: string }[] = [
   { link: "/result", title: "結果" },
   { link: "/pokedex", title: "図鑑" },
   { link: "/ranking", title: "ランキング" },
-  { link: "/setting", title: "設定 " },
+  { link: "/settings", title: "設定 " },
 ];
 
 function NavigationItems() {
